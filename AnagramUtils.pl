@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+use File::Spec::Functions 'catfile';
 
 # AnagramCanonize())
 # Sort letters in a word as canonical anagram
@@ -57,8 +58,11 @@ sub IsRealWord {
 # %Canons - hash mapping canonical form to comma-separated list of real words
 sub LoadAnagramCanons {
 	my $initial = '';
+	my $wlPath = $ENV{WORDLIST_PATH};
+	$wlPath = '.' unless $wlPath =~ /\w/;
 	my $fname = "Anagrams_en_us.txt";
-	open INFILE, "$fname" or die "Could not load Anagrams list: $fname\n";
+	my $fqName = catfile($wlPath, $fname);
+	open INFILE, "$fqName" or die "Could not load Anagrams list: $fqName\n";
 	while (<INFILE>) {
 		chomp;
 		next unless /(([A-Z])[A-Z]*):([A-Z,]+)/;

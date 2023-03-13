@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+use File::Spec::Functions 'catfile';
 
 sub decrypt_string {
   my $key = shift;
@@ -17,7 +18,12 @@ sub decrypt_string {
 
 sub load_patterns {
 	my $patterns;
-	open PATTERNS, "Patterns_en_us.txt" or die "could not open patterns file"; 
+	my $wlPath = $ENV{WORDLIST_PATH};
+	$wlPath = '.' unless $wlPath =~ /\w/;
+	my $fname = "Patterns_en_us.txt";
+	my $fqName = catfile($wlPath, $fname);
+	
+	open PATTERNS, $fqName or die "could not open $fqName"; 
 	while(<PATTERNS>) {
 		chomp;
 		$patterns->{"$1"} = $2 if /([\w']+);([;a-z']+)/i;
