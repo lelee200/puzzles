@@ -55,10 +55,10 @@ sub CheckForWords {
     }
     foreach my $word (@words) {
         my $len = length $word;
-        next if $startCol + $deltaCol * ( $len ) < 0;
-        next if $startCol + $deltaCol * ( $len ) >= $MaxCol;
-        next if $startRow + $deltaRow * ( $len ) < 0;
-        next if $startRow + $deltaRow * ( $len ) >= $MaxRow;
+        next if $startCol + $deltaCol * ( $len ) < -1;
+        next if $startCol + $deltaCol * ( $len ) > $MaxCol;
+        next if $startRow + $deltaRow * ( $len ) < -1;
+        next if $startRow + $deltaRow * ( $len ) > $MaxRow;
         my $r = $startRow + 2 * $deltaRow;
         my $c = $startCol + 2 * $deltaCol;
         my $match = 1;
